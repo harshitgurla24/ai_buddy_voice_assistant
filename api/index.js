@@ -14,7 +14,11 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (req.method === 'POST' && req.url === '/api/chat') {
+  // Debug: Log the request path
+  console.log('API Request:', req.method, req.url, req.path);
+
+  // Handle POST requests to /chat or /api/chat
+  if (req.method === 'POST' && (req.url === '/chat' || req.url === '/api/chat' || req.path === '/chat')) {
     const { message, conversationHistory } = req.body;
 
     console.log('Received message:', message);
@@ -92,9 +96,10 @@ export default async function handler(req, res) {
     }
   }
 
-  if (req.method === 'GET' && req.url === '/api/health') {
+  if (req.method === 'GET' && (req.url === '/health' || req.url === '/api/health' || req.path === '/health')) {
     return res.json({ status: 'OK', message: 'AI Voice Assistant API is running' });
   }
 
-  return res.status(404).json({ error: 'Not found' });
+  // Default 404 response
+  return res.status(404).json({ error: 'Not found. Available endpoints: POST /chat, GET /health' });
 }
