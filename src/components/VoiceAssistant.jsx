@@ -121,8 +121,10 @@ const VoiceAssistant = ({ onAddMessage, language, setIsLoading, messages }) => {
   const getAIResponse = async (userText) => {
     console.log('Sending to backend:', userText);
 
-    // Use environment variable for API URL or fallback to localhost
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    // Use relative URL for Vercel deployment, localhost for development
+    const apiUrl = import.meta.env.PROD 
+      ? '' // Use same domain in production (Vercel)
+      : 'http://localhost:3001'; // Use local server in development
 
     try {
       const response = await fetch(`${apiUrl}/api/chat`, {
