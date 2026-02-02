@@ -1,0 +1,259 @@
+.voice-assistant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mic-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid white;
+  background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  font-size: 35px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.mic-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mic-btn.listening {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  animation: pulse-animation 1s infinite;
+}
+
+.mic-btn .pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid rgba(76, 175, 80, 0.7);
+  animation: pulse-ring 1.5s infinite;
+}
+
+@keyframes pulse-animation {
+  0%, 100% {
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+  }
+  50% {
+    box-shadow: 0 5px 30px rgba(76, 175, 80, 0.6);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.stop-btn, .stop-speak-btn {
+  padding: 12px 20px;
+  border: 2px solid white;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.stop-btn:hover, .stop-speak-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.stop-btn {
+  border-color: #FF9800;
+  background: rgba(255, 152, 0, 0.3);
+}
+
+.stop-speak-btn {
+  border-color: #2196F3;
+  background: rgba(33, 150, 243, 0.3);
+}
+
+/* Tablet and below */
+@media (max-width: 768px) {
+  .voice-assistant {
+    gap: 12px;
+  }
+
+  .mic-btn {
+    width: 65px;
+    height: 65px;
+    font-size: 32px;
+  }
+
+  .stop-btn, .stop-speak-btn {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .status p {
+    font-size: 14px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .voice-assistant {
+    gap: 10px;
+    width: 100%;
+  }
+
+  .button-group {
+    gap: 10px;
+    width: 100%;
+  }
+
+  .mic-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    border-width: 2px;
+  }
+
+  .stop-btn, .stop-speak-btn {
+    padding: 10px 16px;
+    font-size: 12px;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .status {
+    width: 100%;
+  }
+
+  .status p {
+    font-size: 13px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .mic-btn {
+    width: 55px;
+    height: 55px;
+    font-size: 26px;
+  }
+
+  .stop-btn, .stop-speak-btn {
+    padding: 8px 14px;
+    font-size: 11px;
+    min-width: 100px;
+  }
+
+  .status p {
+    font-size: 12px;
+  }
+}
+
+/* Landscape mode for phones */
+@media (max-height: 600px) and (orientation: landscape) {
+  .voice-assistant {
+    gap: 8px;
+  }
+
+  .mic-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+
+  .stop-btn, .stop-speak-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .status {
+    display: none;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .mic-btn,
+  .stop-btn,
+  .stop-speak-btn {
+    /* Larger touch targets for mobile */
+    min-height: 44px;
+  }
+
+  .mic-btn:active {
+    transform: scale(0.95);
+  }
+
+  .stop-btn:active,
+  .stop-speak-btn:active {
+    transform: scale(0.98);
+  }
+}
+
+.status {
+  text-align: center;
+  min-height: 25px;
+}
+
+.listening-status, .speaking-status {
+  font-size: 14px;
+  animation: bounce 1s infinite;
+  margin: 0;
+}
+
+.listening-status {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.speaking-status {
+  color: #2196F3;
+  font-weight: bold;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 600px) {
+  .mic-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+
+  .stop-btn, .stop-speak-btn {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+}
