@@ -19,11 +19,13 @@ export default async function handler(req, res) {
 
     console.log('Received message:', message);
 
-    const API_KEY = process.env.VITE_OPENAI_API_KEY;
+    // Vercel environment variable (without VITE_ prefix)
+    const API_KEY = process.env.GROQ_API_KEY || process.env.VITE_OPENAI_API_KEY;
 
     if (!API_KEY) {
+      console.error('API key not found in environment variables');
       return res.status(500).json({ 
-        error: 'API key not configured on server' 
+        error: 'API key not configured on server. Please add GROQ_API_KEY in Vercel Environment Variables.' 
       });
     }
 
