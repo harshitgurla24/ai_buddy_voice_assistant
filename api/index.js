@@ -14,16 +14,25 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (req.method === 'POST' && req.url === '/api/chat') {
+  // Health check endpoint
+  if (req.method === 'GET') {
+    return res.json({ status: 'OK', message: 'AI Voice Assistant API is running' });
+  }
+
+  // Chat endpoint - accept both /api/chat and just /chat (Vercel routing)
+  if (req.method === 'POST') {
     const { message, conversationHistory } = req.body;
 
     console.log('Received message:', message);
+    console.log('Request URL:', req.url);
+    console.log('Request path:', req.path);
 
     // Vercel environment variable (without VITE_ prefix)
     const API_KEY = process.env.GROQ_API_KEY || process.env.VITE_OPENAI_API_KEY;
 
     if (!API_KEY) {
       console.error('API key not found in environment variables');
+      console.error('Available env vars:', Object.keys(process.env).filter(k => k.includes('KEY') || k.includes('API')));
       return res.status(500).json({ 
         error: 'API key not configured on server. Please add GROQ_API_KEY in Vercel Environment Variables.' 
       });
@@ -92,9 +101,6 @@ export default async function handler(req, res) {
     }
   }
 
-  if (req.method === 'GET' && req.url === '/api/health') {
-    return res.json({ status: 'OK', message: 'AI Voice Assistant API is running' });
-  }
-
-  return res.status(404).json({ error: 'Not found' });
+  return res.status(404).json({ error: 'Not found - use POST /api/chat' });
+}
 }
